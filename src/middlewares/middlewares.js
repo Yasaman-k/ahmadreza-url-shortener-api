@@ -1,7 +1,7 @@
 const express = require('express');
 
 module.exports = [
-    require('../helpers/utils').morganMiddleware,
+    require('@lo-agency/logger').morganMiddleware,
     express.json(),
     (err, req, res, next) => {
         if (['POST', 'PUT'].includes(req.method) && err) {

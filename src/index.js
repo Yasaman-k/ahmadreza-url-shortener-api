@@ -1,5 +1,5 @@
 require("dotenv/config");
-const { Logger } = require('./helpers/utils');
+const { Logger } = require('@lo-agency/logger');
 
 const app = require("express")();
 
