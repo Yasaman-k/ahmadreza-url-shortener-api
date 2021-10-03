@@ -4,20 +4,32 @@ const Urls = require('../database/urls-repository');
 
 router
     .route('/api/urls')
+
     .post((req, res) => {
-        let url = req.body.url
-        if (!validUrl(url)) {
-            res.status(400).send({ error: 'check url' });
-            return;
+        try {
+            let url = req.body.url;
+            if (!validUrl(url)) {
+                res.status(422).send({ error: "check url key and value in body request!" });
+                return;
+            }
+            res.status(200).send(Urls.insertUrl(url));
+        } catch (error) {
+            res.status(500).send({ error: "something went wrong!" });
+            Logger.error(error.message);
         }
-        res.status(200).send(Urls.insertUrl(url))
     })
+
     .get((req, res) => {
-        res.status(200).send(Urls.getAllUrls())
+        try {
+            res.status(200).send(Urls.getAllUrls());
+        } catch (error) {
+            res.status(500).send({ error: "something went wrong!" });
+            Logger.error(error.message);
+        }
     })
 
 function validUrl(url) {
-    return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(url)
+    return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(url);
 }
 
 module.exports = router;
