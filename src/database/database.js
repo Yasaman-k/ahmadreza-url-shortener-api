@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { Logger } = require('../helpers/utils');
+const { Logger } = require('@lo-agency/logger');
 const betterSqlite3 = require('better-sqlite3');
 
 const dbPath = process.env.DB_PATH || `${__dirname}/main.db`;
