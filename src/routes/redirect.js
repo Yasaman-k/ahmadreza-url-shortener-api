@@ -4,13 +4,18 @@ const Urls = require('../database/urls-repository');
 
 router
     .get('/:shortUrl', (req, res) => {
-        let url = Urls.getUrlCode(req.params.shortUrl)
-        if (!url) {
-            res.status(404).send({ error: 'Not Founded' });
-            return;
+        try {
+            let url = Urls.getUrlCode(req.params.shortUrl);
+            if (!url) {
+                res.status(404).send({ error: 'not found!' });
+                return;
+            }
+            res.redirect(/^(https?:\/\/)/.test(url.full) ? url.full : "http://" + url.full);
+            Urls.updateViews(url.id);
+        } catch (error) {
+            res.status(500).send({ error: "something went wrong!" });
+            Logger.error(error.message)
         }
-        res.redirect(/^(http|https)/.test(url.full) ? url.full : "http://" + url.full)
-        Urls.updateViews(url.id)
     })
 
 module.exports = router;
