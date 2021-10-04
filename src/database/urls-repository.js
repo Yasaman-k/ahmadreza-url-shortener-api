@@ -9,7 +9,7 @@ const table = 'urls';
  * @return {Object} - this function return row or record object inserted
  */
 const insertUrl = (fullUrl, codeUrlLength = 5) => {
-    const randomStr = Math.random().toString(36).slice(2, codeUrlLength + 2);
+    const randomStr = Math.random().toString(36).slice(2, (+process.env.SHORT_URL_LENGTH || codeUrlLength) + 2);
     if (getUrlCode(randomStr)) {
         insertUrl(fullUrl, codeUrlLength)
     } else {

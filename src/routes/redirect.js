@@ -3,7 +3,7 @@ const { Logger } = require('@lo-agency/logger');
 const Urls = require('../database/urls-repository');
 
 router
-    .get('/:shortUrl', (req, res) => {
+    .get(`${process.env.REDIRECT_PATH}/:shortUrl`, (req, res) => {
         try {
             let url = Urls.getUrlCode(req.params.shortUrl);
             if (!url) {
