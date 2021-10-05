@@ -1,4 +1,5 @@
 const db = require('./database');
+const { Logger } = require('@lo-agency/logger');
 
 const table = 'urls';
 
@@ -10,15 +11,19 @@ const table = 'urls';
  */
 const insertUrl = (fullUrl, codeUrlLength = 5) => {
     const randomStr = Math.random().toString(36).slice(2, (+process.env.SHORT_URL_LENGTH || codeUrlLength) + 2);
-    if (getUrlCode(randomStr)) {
-        insertUrl(fullUrl, codeUrlLength)
-    } else {
+    try {
         return getUrlId(
             db.prepare(` INSERT INTO ${table} (full, short) VALUES (?, ?)`).run(
                 fullUrl,
                 randomStr
             ).lastInsertRowid
         )
+    } catch (error) {
+        if (error.message === 'UNIQUE constraint failed: urls.short') {
+            insertUrl(fullUrl, codeUrlLength);
+        } else {
+            throw new Error(error);
+        }
     }
 }
 
