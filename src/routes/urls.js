@@ -29,7 +29,7 @@ router
     })
 
 function validUrl(url) {
-    return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(url);
+    return /^(https?:\/\/)?(\w+[\-\.@]?\w+)+(\.\w+)+([\/\?:][\w%#@\/\?\-_~\.,\+\=\$&'\(\)\*;\:\[\]!]*)?$/.test(url);
 }
 
 module.exports = router;
