@@ -1,5 +1,4 @@
 const db = require('./database');
-const { Logger } = require('@lo-agency/logger');
 
 const table = 'urls';
 
