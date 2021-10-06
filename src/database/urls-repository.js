@@ -9,16 +9,20 @@ const table = 'urls';
  * @return {Object} - this function return row or record object inserted
  */
 const insertUrl = (fullUrl, codeUrlLength = 5) => {
-    const randomStr = Math.random().toString(36).slice(2, codeUrlLength + 2);
-    if (getUrlCode(randomStr)) {
-        insertUrl(fullUrl, codeUrlLength)
-    } else {
+    const randomStr = Math.random().toString(36).slice(2, (+process.env.SHORT_URL_LENGTH || codeUrlLength) + 2);
+    try {
         return getUrlId(
             db.prepare(` INSERT INTO ${table} (full, short) VALUES (?, ?)`).run(
                 fullUrl,
                 randomStr
             ).lastInsertRowid
         )
+    } catch (error) {
+        if (error.message === 'UNIQUE constraint failed: urls.short') {
+            insertUrl(fullUrl, codeUrlLength);
+        } else {
+            throw new Error(error);
+        }
     }
 }
 
