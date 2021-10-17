@@ -61,6 +61,7 @@
 |-|-|-|
 /api/urls|POST|Using this path, you can register a url to shorten it. Use [POST Request body structure](#post-request-body) in the body of your request to register the url.
 /api/urls|GET|Using this path, you can get all the registered urls along with their shortening code. Using the [Query Structure](#query-structure), all data and urls can be received in a filtered way. (Filtering, searching, restricting, ordering and sorting data)
+/api/urls/code-or-id|GET|Using this route, you can receive a shortened record or ural, and view items such as registration date or number of visits, etc. Using the ID or shortened code of a database record, you can access the information of url. `/api/urls/15` or `/api/urls/f6opj`
 
 ### POST Request Body
 All items available to post a url using this api.
