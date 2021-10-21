@@ -43,6 +43,7 @@ router
     })
 
     .get(prefix, (req, res) => {
+        res.set('Access-Control-Allow-Origin', '*');
         // check the validity of the parameters in the request query
         // ff there is no parameter in the query, it is ignored by function
         let { result, message } = validQuery(getQuerySchema, req.query);
